@@ -1,7 +1,6 @@
 # Educational-Process-Management-System
 
-![Схема платформы приложения](./assets/schema.jpg)
-
+Схема платформы приложения
 ```mermaid
 graph TD
     A[Rest API]
