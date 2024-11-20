@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    container_name: education_postgres
+    environment:
+      POSTGRES_DB: education_db
+      POSTGRES_USER: edu_user
+      POSTGRES_PASSWORD: securepassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/scripts:/docker-entrypoint-initdb.d/
+    networks:
+      - education_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U edu_user -d education_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web-api:
+    build:
+      context: ./web-api
+      dockerfile: Dockerfile
+    container_name: education_web_api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://education_postgres:5432/education_db
+      SPRING_DATASOURCE_USERNAME: edu_user
+      SPRING_DATASOURCE_PASSWORD: securepassword
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - education_network
+
+volumes:
+  postgres_data:
+
+networks:
+  education_network:
+    driver: bridge
