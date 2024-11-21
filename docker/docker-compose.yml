@@ -36,6 +36,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+      - ./data_exports:/app/data_exports
     networks:
       - education_network
 
