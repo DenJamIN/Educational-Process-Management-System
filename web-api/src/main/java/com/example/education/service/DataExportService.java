@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class DataExportService {
@@ -22,7 +23,7 @@ public class DataExportService {
 
     private final static String EXPORT_DIRECTORY = "/app/data_exports";
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(timeUnit = TimeUnit.MILLISECONDS, fixedRate = 5_000)
     public void exportData() {
         List<Student> students = studentRepository.findAll();
         String filename = "students_export_" + System.currentTimeMillis() + ".json";
