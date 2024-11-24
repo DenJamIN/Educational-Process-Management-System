@@ -2,10 +2,29 @@
 
 Docker-конфигурации для контейнеризации компонентов приложения.
 
-- **web-api/** — Dockerfile и конфиги для Web API.
-- **spark-streaming/** — Dockerfile и конфиги для Spark Streaming.
-- **kafka/** — Dockerfile и конфиги для Kafka.
-- **consumer-group/** — Dockerfile и конфиги для consumer group.
-- **postgresql/** — Dockerfile и конфиги для PostgreSQL.
-- **mongodb/** — Dockerfile и конфиги для MongoDB.
+> **Запустить контейнеры**
+> ```shell
+> docker compose up
+> ```
 
+> **Остановить контейнеры и удалить хранилища**
+> 
+> *Используется для полного перезапуска системы*
+> ```shell
+> docker compose down -v
+> ```
+ 
+> **Проверка сохранения в локальное хранилище
+> ([data-exports](./data_exports)) студентов**
+> 
+> *Отправляет `curl` запрос на` Web Api`*
+> ```shell
+> curl -X POST http://localhost:8080/api/students \
+>     -H "Content-Type: application/json" \
+>     -d '{
+>           "firstName": "Тест",
+>           "lastName": "Тестов",
+>           "email": "test.testov@example.ru",
+>           "enrollmentDate": "2024-09-01"
+>         }'
+> ```
