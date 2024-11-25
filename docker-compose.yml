@@ -27,7 +27,7 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./../data_exports:/app/data_exports
+      - ./data_exports:/app/data_exports
     networks:
       - education_network
 
@@ -63,8 +63,8 @@ services:
       dockerfile: Dockerfile
     container_name: spark_streaming_app
     volumes:
-      - ./../data_exports:/app/data_exports
-      - ./../spark-checkpoints:/app/checkpoints
+      - ./data_exports:/app/data_exports
+      - ./spark-checkpoints:/app/checkpoints
     depends_on:
       - kafka
     networks:
