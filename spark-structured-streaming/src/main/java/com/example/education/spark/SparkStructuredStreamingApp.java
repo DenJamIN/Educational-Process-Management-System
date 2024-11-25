@@ -4,6 +4,7 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQueryException;
+import org.apache.spark.sql.streaming.StreamingQueryListener;
 
 import java.util.concurrent.TimeoutException;
 
@@ -14,6 +15,23 @@ public class SparkStructuredStreamingApp {
                 .appName("StudentExportStreamingApp")
                 .master("local[*]")
                 .getOrCreate();
+
+        spark.streams().addListener(new StreamingQueryListener() {
+            @Override
+            public void onQueryStarted(QueryStartedEvent event) {
+                System.out.println("Запрос запущен: " + event.id());
+            }
+
+            @Override
+            public void onQueryTerminated(QueryTerminatedEvent event) {
+                System.out.println("Запрос остановлен: " + event.id());
+            }
+
+            @Override
+            public void onQueryProgress(QueryProgressEvent event) {
+                System.out.println("Прогресс запроса: " + event.progress());
+            }
+        });
 
         Dataset<Row> fileStream = spark.readStream()
                 .format("json")
