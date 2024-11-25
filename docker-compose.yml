@@ -6,6 +6,10 @@ services:
     container_name: education_postgres
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_USER: edu_user
+      POSTGRES_PASSWORD: securepassword
+      POSTGRES_DB: education_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -37,8 +41,8 @@ services:
     ports:
       - "2181:2181"
     environment:
-      - ZOOKEEPER_CLIENT_PORT=2181
-      - ZOOKEEPER_TICK_TIME=2000
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     networks:
       - education_network
 
@@ -50,10 +54,10 @@ services:
     ports:
       - "9092:9092"
     environment:
-      - KAFKA_BROKER_ID=1
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - education_network
 

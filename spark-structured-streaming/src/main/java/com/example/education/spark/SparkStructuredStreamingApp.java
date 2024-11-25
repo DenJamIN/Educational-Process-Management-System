@@ -5,6 +5,8 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.streaming.StreamingQueryException;
 import org.apache.spark.sql.streaming.StreamingQueryListener;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructType;
 
 import java.util.concurrent.TimeoutException;
 
@@ -50,12 +52,12 @@ public class SparkStructuredStreamingApp {
                 .awaitTermination();
     }
 
-    private static org.apache.spark.sql.types.StructType getStudentSchema() {
-        return new org.apache.spark.sql.types.StructType()
-                .add("studentId", "long")
-                .add("firstName", "string")
-                .add("lastName", "string")
-                .add("email", "string")
-                .add("enrollmentDate", "date");
+    private static StructType getStudentSchema() {
+        return new StructType()
+                .add("studentId", DataTypes.LongType)
+                .add("firstName", DataTypes.StringType)
+                .add("lastName", DataTypes.StringType)
+                .add("email", DataTypes.StringType)
+                .add("enrollmentDate", DataTypes.DateType);
     }
 }
