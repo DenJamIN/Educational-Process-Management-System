@@ -1,7 +1,8 @@
-FROM openjdk:17-jdk-alpine
+FROM apache/spark:3.4.0
 
-WORKDIR /app
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$SPARK_HOME/bin:$PATH
 
-COPY ./target/spark-structured-streaming-1.0-SNAPSHOT.jar app.jar
+COPY target/spark-structured-streaming-1.0-SNAPSHOT.jar /app/
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["spark-submit", "--class", "com.example.education.spark.SparkStructuredStreamingApp", "/app/spark-structured-streaming-1.0-SNAPSHOT.jar"]

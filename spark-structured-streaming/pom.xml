@@ -11,8 +11,8 @@
     <name>spark-structured-streaming</name>
 
     <properties>
-        <java.version>17</java.version>
-        <spark.version>3.5.0</spark.version>
+        <java.version>11</java.version>
+        <spark.version>3.4.0</spark.version>
     </properties>
 
     <dependencies>
