@@ -85,6 +85,11 @@ services:
       - mongo_data:/data/db
     networks:
       - education_network
+    healthcheck:
+      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   kafka-consumer:
     build:
@@ -92,8 +97,10 @@ services:
       dockerfile: Dockerfile
     container_name: kafka_consumer_app
     depends_on:
-      - kafka
-      - mongo
+      kafka:
+        condition: service_started
+      mongo:
+        condition: service_healthy
     networks:
       - education_network
 
