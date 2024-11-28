@@ -10,18 +10,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumerService {
 
-    @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    public KafkaConsumerService(StudentRepository studentRepository, ObjectMapper objectMapper) {
+        this.studentRepository = studentRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @KafkaListener(topics = "student_exports", groupId = "student_export_group")
     public void consume(String message) {
         try {
             Student student = objectMapper.readValue(message, Student.class);
             studentRepository.save(student);
-            System.out.println("Сохранён студент: " + student);
         } catch (Exception e) {
             e.printStackTrace();
         }
