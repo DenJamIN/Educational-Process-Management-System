@@ -15,7 +15,7 @@ public class SparkStructuredStreamingApp {
     public static void main(String[] args) throws StreamingQueryException, TimeoutException {
         SparkSession spark = SparkSession.builder()
                 .appName("StudentExportStreamingApp")
-                .master("local[*]")
+                .master("spark://spark:7077")  // Используем spark master
                 .getOrCreate();
 
         spark.streams().addListener(new StreamingQueryListener() {

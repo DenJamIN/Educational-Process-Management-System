@@ -68,7 +68,7 @@ services:
     container_name: spark_streaming_app
     volumes:
       - ./data_exports:/app/data_exports
-      - ./spark-checkpoints:/app/checkpoints
+      - ./checkpoints:/app/checkpoints
     depends_on:
       - kafka
     networks:
