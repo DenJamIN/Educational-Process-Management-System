@@ -1,5 +1,10 @@
 ## Databases
 
+> **Перейти в БД Postgres**
+> ```shell
+> docker exec -it education_postgres psql -U edu_user -W education_db
+> ```
+
 Содержит конфигурации и скрипты для баз данных.
 
 - **postgresql/** — настройки и скрипты для PostgreSQL.
@@ -46,5 +51,4 @@ erDiagram
     COURSES ||--o{ ENROLLMENTS : includes
     TEACHERS ||--|{ COURSES : teaches
     ENROLLMENTS ||--o{ GRADES : receives
-
 ```

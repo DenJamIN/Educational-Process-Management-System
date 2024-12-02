@@ -23,7 +23,7 @@ public class DataExportService {
 
     private final static String EXPORT_DIRECTORY = "/app/data_exports";
 
-    @Scheduled(timeUnit = TimeUnit.MILLISECONDS, fixedRate = 5_000)
+    @Scheduled(timeUnit = TimeUnit.MILLISECONDS, fixedRate = 60_000)
     public void exportData() {
         List<Student> students = studentRepository.findAll();
         String filename = "students_export_" + System.currentTimeMillis() + ".json";
