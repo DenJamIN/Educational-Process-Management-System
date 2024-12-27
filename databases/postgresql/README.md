@@ -4,11 +4,12 @@
 > ```shell
 > docker exec -it education_postgres psql -U edu_user -W education_db
 > ```
+> 
+> *Password:* `securepassword`
 
 Содержит конфигурации и скрипты для баз данных.
 
 - **postgresql/** — настройки и скрипты для PostgreSQL.
-- **mongodb/** — настройки и скрипты для MongoDB.
 
 ```mermaid
 erDiagram
