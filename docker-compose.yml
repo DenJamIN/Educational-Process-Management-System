@@ -33,6 +33,11 @@ services:
       - mongo_data:/data/db
     networks:
       - education_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Zookeeper
   zookeeper:
@@ -60,6 +65,11 @@ services:
       - "9092:9092"
     networks:
       - education_network
+    healthcheck:
+      test: ["CMD", "nc", "-z", "kafka", "9092"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Spark Master
   spark-master:
@@ -72,7 +82,7 @@ services:
       - SPARK_SSL_ENABLED=no
     ports:
       - "7077:7077"   # Spark Master Port
-      - "8083:8080"   # Spark Master Web UI (внешний порт 8083 будет перенаправлен на внутренний 8080)
+      - "8083:8080"   # Spark Master Web UI (external port 8083 maps to internal 8080)
     networks:
       - education_network
     healthcheck:
@@ -95,6 +105,11 @@ services:
       - "8081:8081"   # Spark Worker Web UI
     networks:
       - education_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://spark-master:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Spark Application
   spark-app:
@@ -109,6 +124,7 @@ services:
       - ./data:/data
     networks:
       - education_network
+    restart: unless-stopped
 
   # Kafka Consumer Group
   kafka-consumer:
@@ -125,6 +141,7 @@ services:
       MONGO_COLLECTION: courses
     networks:
       - education_network
+    restart: unless-stopped
 
   # Web API
   web-api:
@@ -137,10 +154,13 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      mongo:
+        condition: service_healthy
     volumes:
       - ./data_exports:/app/data_exports
     networks:
       - education_network
+    restart: unless-stopped
 
   # JMeter для нагрузочного тестирования
   jmeter:
@@ -155,6 +175,7 @@ services:
     entrypoint: ["jmeter", "-n", "-t", "/tests/test_plan.jmx", "-l", "/tests/results/results.jtl"]
     networks:
       - education_network
+    restart: unless-stopped
 
 volumes:
   postgres_data:

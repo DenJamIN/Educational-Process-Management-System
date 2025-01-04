@@ -27,5 +27,8 @@ consumer = KafkaConsumer(
 
 for message in consumer:
     data = message.value
-    collection.insert_one(data)
-    print(f"Inserted document: {data}")
+    try:
+        collection.insert_one(data)
+        print(f"Inserted document: {data}")
+    except Exception as e:
+        print(f"Failed to insert document: {data}, error: {e}")
