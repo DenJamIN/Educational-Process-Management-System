@@ -10,7 +10,7 @@ GROUP_ID = 'education_consumer_group'
 # Настройки MongoDB
 MONGO_URI = 'mongodb://mongo:27017/'
 MONGO_DB = 'education_db'
-MONGO_COLLECTION = 'courses'
+MONGO_COLLECTION = 'students'
 
 # Подключение к MongoDB
 client = MongoClient(MONGO_URI)

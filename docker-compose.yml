@@ -82,7 +82,7 @@ services:
       - SPARK_SSL_ENABLED=no
     ports:
       - "7077:7077"   # Spark Master Port
-      - "8083:8080"   # Spark Master Web UI (external port 8083 maps to internal 8080)
+      - "8000:8000"   # Spark Master Web UI (external port 8083 maps to internal 8080)
     networks:
       - education_network
     healthcheck:
@@ -121,7 +121,7 @@ services:
       - mongo
       - web-api
     volumes:
-      - ./data:/data
+      - ./data_exports:/app/data_exports
     networks:
       - education_network
     restart: unless-stopped
@@ -150,7 +150,7 @@ services:
       dockerfile: Dockerfile
     container_name: education_web_api
     ports:
-      - "8000:8000"   # Изменено с 8080 на 8000, чтобы избежать конфликта с Spark Master Web UI
+      - "8080:8080"   # Изменено с 8080 на 8000, чтобы избежать конфликта с Spark Master Web UI
     depends_on:
       postgres:
         condition: service_healthy

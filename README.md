@@ -42,12 +42,12 @@ Docker-конфигурации для контейнеризации компо
 >
 > *Отправляет `curl` запрос на` Web Api`*
 > ```shell
-> curl -X POST http://8000:8000/api/students \
+> curl -X POST http://localhost:8080/api/students \
 >     -H "Content-Type: application/json" \
 >     -d '{
 >           "firstName": "Тест",
 >           "lastName": "Тестов",
 >           "email": "test.testov@example.ru",
->           "enrollmentDate": "2024-09-01"
+>           "enrollmentDate": "2025-01-01"
 >         }'
 > ```
