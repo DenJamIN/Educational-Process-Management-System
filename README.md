@@ -48,6 +48,6 @@ Docker-конфигурации для контейнеризации компо
 >           "firstName": "Тест",
 >           "lastName": "Тестов",
 >           "email": "test.testov@example.ru",
->           "enrollmentDate": "2024-09-01"
+>           "enrollmentDate": "2025-01-01"
 >         }'
 > ```
